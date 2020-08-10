@@ -21,6 +21,8 @@ Vue.config.productionTip = false;
 router.beforeEach(async (to, from, next) => {
   document.title = to.meta.title;
 
+  // ONLINE TEST CODE.
+
   // if (store.state.refresh) {
   //   try {
   //     const userInfo = await store.dispatch('getUserInfo', window.location.search);
@@ -44,74 +46,17 @@ router.beforeEach(async (to, from, next) => {
   //   }
   // }
 
+  // LOCAL TEST CODE.
+
   if (store.state.identity === 'owner') {
     store.state.identity = '';
     next('/owner');
-  } else {
-    next();
+  } else if (store.state.identity === 'consultant') {
+    store.state.identity = '';
+    next('/consultant');
   }
 
   next();
-
-  // if (store.state.refresh) {
-  //   try {
-  //     const userInfo = await store.dispatch('getUserInfo', window.location.search);
-  //     console.log('USERINFO: ', userInfo);
-  //     next();
-  //   } catch (error) {
-  //     console.log(error);
-  //     next();
-  //   }
-  // } else {
-  //   next();
-  // }
-
-  // const token = Object.keys(getToken()).length;
-
-  // if (token) {
-  //   console.log('HAS TOKEN: ', Boolean(token));
-  //   next();
-  // } else {
-  //   try {
-  //     const userInfo = await store.dispatch('getUserInfo', window.location.search);
-  //     console.log('USERINFO: ', userInfo);
-  //     next();
-  //   } catch (error) {
-  //     console.log(error);
-  //     next();
-  //   }
-  // }
-
-  // next();
-
-  // const token = Object.keys(getToken()).length;
-
-  // if (token) {
-  //   console.log(`TOKEN: ${token}`);
-  //   if (to.path === '/validate') {
-  //     next();
-  //   } else {
-  //     if (store.state.registered) {
-  //       console.log(`REGISTERED: ${store.state.registered}`);
-  //       next();
-  //     } else {
-  //       console.log(`REGISTERED: ${store.state.registered}`);
-  //       next({ path: '/validate' });
-  //     }
-  //   }
-  // } else {
-  //   const userInfo = await store.dispatch('getUserInfo', window.location.search);
-  //   console.log('USERINFO: ', userInfo);
-
-  //   next();
-  //   if (userInfo.is_registed) {
-  //     next();
-  //   } else {
-  //     const authInfo = await getAuthInfo();
-  //     console.log('AUTHINFO: ', authInfo);
-  //     next({ path: '/validate' });
-  //   }
-  // }
 });
 
 new Vue({

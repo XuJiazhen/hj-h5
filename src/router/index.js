@@ -68,6 +68,14 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/consultant',
+    name: 'Consultant',
+    component: () => import('@/views/consultant/index.vue'),
+    meta: {
+      title: '置业顾问',
+    },
+  },
 ];
 
 const router = new VueRouter({

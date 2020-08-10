@@ -11,7 +11,7 @@ export default new Vuex.Store({
     refresh: true,
     userInfo: null,
     registered: false,
-    identity: 'owner',
+    identity: 'consultant',
   },
   mutations: {
     SET_USERINFO: (state, userInfo) => {
