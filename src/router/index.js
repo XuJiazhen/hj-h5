@@ -14,22 +14,6 @@ const routes = [
     },
   },
   {
-    path: '/report',
-    name: 'Report',
-    component: () => import('@/views/Report.vue'),
-    meta: {
-      title: '推荐',
-    },
-  },
-  {
-    path: '/user',
-    name: 'User',
-    component: () => import('@/views/User.vue'),
-    meta: {
-      title: '我的',
-    },
-  },
-  {
     path: '/validate',
     name: 'Validate',
     component: () => import('@/views/Validate.vue'),
@@ -40,6 +24,7 @@ const routes = [
   {
     path: '/owner',
     name: 'Owner',
+    redirect: '/owner/home',
     component: () => import('@/views/owner/index.vue'),
     meta: {
       title: '客户',
@@ -50,6 +35,18 @@ const routes = [
         name: 'Home',
         component: () => import('@/views/owner/home/index.vue'),
         meta: { title: '首页' },
+      },
+      {
+        path: 'recommend',
+        name: 'Recommend',
+        component: () => import('@/views/owner/recommend/index.vue'),
+        meta: { title: '推荐' },
+      },
+      {
+        path: 'my',
+        name: 'My',
+        component: () => import('@/views/owner/my/index.vue'),
+        meta: { title: '我的' },
       },
     ],
   },
