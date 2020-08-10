@@ -1,0 +1,21 @@
+:root {
+  font-size: 14px !important;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f4f4f4;
+
+  a {
+    text-decoration: none;
+  }
+
+  // VARIABLES
+  --main-bg-color: #2a765a;
+  --main-border-color: #f4f4f4;
+
+  --forward-icon-color: #808080;
+  --sub-text-color: #808080;
+
+  --white: #ffffff;
+  --black: #000000;
+}
