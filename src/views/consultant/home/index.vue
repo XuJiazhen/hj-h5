@@ -6,29 +6,41 @@
       </v-avatar>
       <span class="title">{{ name }}</span>
       <div class="features">
-        <span class="identity">{{ isRegistered }}</span>
+        <span class="identity">{{ identity }}</span>
         <span class="total">已推荐客户数：{{ total }} 人</span>
       </div>
     </div>
     <v-tabs centered grow color="#2a765a" icons-and-text optional height="55">
       <v-tab to="/owner/client" active-class="test">
-        客户
-        <i class="icon iconfont icon-qunzu"></i>
+        已报备
+        <i class="icon iconfont icon-tongzhizhongxin"></i>
       </v-tab>
       <v-tab to="/owner/clinch">
-        成交
+        已到访
         <i class="icon iconfont icon-tongzhizhongxin"></i>
       </v-tab>
       <v-tab to="/owner/message">
-        消息
-        <i class="icon iconfont icon-duanxin"></i>
+        已成交
+        <i class="icon iconfont icon-tongzhizhongxin"></i>
+      </v-tab>
+    </v-tabs>
+    <v-tabs centered grow color="#2a765a" icons-and-text optional height="55">
+      <v-tab to="/owner/client" active-class="test">
+        已签约
+        <i class="icon iconfont icon-tongzhizhongxin"></i>
+      </v-tab>
+      <v-tab to="/owner/clinch">
+        业主
+        <i class="icon iconfont icon-gerentouxiang"></i>
+      </v-tab>
+      <v-tab to="/owner/message">
+        已建佣
+        <i class="icon iconfont icon-tongzhizhongxin"></i>
       </v-tab>
     </v-tabs>
 
     <div class="msg-list">
-      <div class="main-title">
-        <span>项目详情-施工中</span>
-      </div>
+      MSG LIST.
     </div>
   </div>
 </template>
@@ -43,7 +55,7 @@
 
         name: '胥佳桢',
         avatar: 'http://thirdwx.qlogo.cn/mmopen/vi_32/5rQ5OyUwWK51Ivx6tHVvVbRGd3V19IhA5O12SedXCIwdBUMF4QJQAkXzCaIktn0bcSjjIOdSEpRs288rYzByHA/132',
-        isRegistered: '已登记',
+        identity: '置业顾问',
       };
     },
     // computed: {
@@ -110,6 +122,7 @@
     }
     .msg-list {
       border-top: 10px solid var(--main-border-color);
+      text-align: center;
     }
   }
 </style>

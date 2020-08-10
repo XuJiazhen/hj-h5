@@ -32,7 +32,7 @@ const routes = [
     children: [
       {
         path: 'home',
-        name: 'Home',
+        name: 'OwnerHome',
         component: () => import('@/views/owner/home/index.vue'),
         meta: { title: '首页' },
       },
@@ -44,7 +44,7 @@ const routes = [
       },
       {
         path: 'my',
-        name: 'My',
+        name: 'OwnerMy',
         component: () => import('@/views/owner/my/index.vue'),
         meta: { title: '我的' },
       },
@@ -71,10 +71,25 @@ const routes = [
   {
     path: '/consultant',
     name: 'Consultant',
+    redirect: '/consultant/home',
     component: () => import('@/views/consultant/index.vue'),
     meta: {
       title: '置业顾问',
     },
+    children: [
+      {
+        path: 'home',
+        name: 'ConsultantHome',
+        component: () => import('@/views/consultant/home/index.vue'),
+        meta: { title: '首页' },
+      },
+      {
+        path: 'my',
+        name: 'ConsultantMy',
+        component: () => import('@/views/consultant/my/index.vue'),
+        meta: { title: '我的' },
+      },
+    ],
   },
 ];
 
