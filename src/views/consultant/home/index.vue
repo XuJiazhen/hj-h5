@@ -11,29 +11,29 @@
       </div>
     </div>
     <v-tabs centered grow color="#2a765a" icons-and-text optional height="55">
-      <v-tab to="/owner/client" active-class="test">
+      <v-tab to="/consultant/reported" active-class="test">
         已报备
         <i class="icon iconfont icon-tongzhizhongxin"></i>
       </v-tab>
-      <v-tab to="/owner/clinch">
+      <v-tab to="/consultant/visited">
         已到访
         <i class="icon iconfont icon-tongzhizhongxin"></i>
       </v-tab>
-      <v-tab to="/owner/message">
+      <v-tab to="/consultant/traded">
         已成交
         <i class="icon iconfont icon-tongzhizhongxin"></i>
       </v-tab>
     </v-tabs>
     <v-tabs centered grow color="#2a765a" icons-and-text optional height="55">
-      <v-tab to="/owner/client" active-class="test">
+      <v-tab to="/consultant/signed" active-class="test">
         已签约
         <i class="icon iconfont icon-tongzhizhongxin"></i>
       </v-tab>
-      <v-tab to="/owner/clinch">
+      <v-tab to="/consultant/owner">
         业主
         <i class="icon iconfont icon-gerentouxiang"></i>
       </v-tab>
-      <v-tab to="/owner/message">
+      <v-tab to="/consultant/established">
         已建佣
         <i class="icon iconfont icon-tongzhizhongxin"></i>
       </v-tab>
