@@ -10,13 +10,26 @@
         <span class="total">已推荐客户数：{{ total }} 人</span>
       </div>
     </div>
-    <div class="tools">
-      <div class="tools-item" v-for="(tool, index) in tools" :key="index">
-        <i class="icon iconfont" :class="tool.icon"></i>
-        <span class="text">{{ tool.name }}</span>
+    <v-tabs centered grow color="#2a765a" icons-and-text optional height="55">
+      <v-tab to="/owner/client" active-class="test">
+        客户
+        <i class="icon iconfont icon-qunzu"></i>
+      </v-tab>
+      <v-tab to="/owner/clinch">
+        成交
+        <i class="icon iconfont icon-tongzhizhongxin"></i>
+      </v-tab>
+      <v-tab to="/owner/message">
+        消息
+        <i class="icon iconfont icon-duanxin"></i>
+      </v-tab>
+    </v-tabs>
+
+    <div class="project">
+      <div class="main-title">
+        <span>项目详情-施工中</span>
       </div>
     </div>
-    <div class="report-body"></div>
   </div>
 </template>
 
@@ -26,38 +39,23 @@
     data() {
       return {
         userInfo: null,
-        name: '胥佳桢',
-        avatar: 'http://thirdwx.qlogo.cn/mmopen/vi_32/5rQ5OyUwWK51Ivx6tHVvVbRGd3V19IhA5O12SedXCIwdBUMF4QJQAkXzCaIktn0bcSjjIOdSEpRs288rYzByHA/132',
-        isRegistered: '已登记',
-        title: '成都慧建房地产营销策划有限公司',
         total: 0,
-        tools: [
-          {
-            icon: 'icon-qunzu',
-            name: '客户',
-          },
-          {
-            icon: 'icon-tongzhizhongxin',
-            name: '成交',
-          },
-          {
-            icon: 'icon-duanxin',
-            name: '消息',
-          },
-        ],
+        // name: '胥佳桢',
+        // avatar: 'http://thirdwx.qlogo.cn/mmopen/vi_32/5rQ5OyUwWK51Ivx6tHVvVbRGd3V19IhA5O12SedXCIwdBUMF4QJQAkXzCaIktn0bcSjjIOdSEpRs288rYzByHA/132',
+        // isRegistered: '已登记',
       };
     },
-    // computed: {
-    //   avatar() {
-    //     return this.userInfo.wechat_info.avatar;
-    //   },
-    //   isRegistered() {
-    //     return this.userInfo.is_registed ? '已登记' : '未登记';
-    //   },
-    //   name() {
-    //     return this.userInfo.wechat_info.name;
-    //   },
-    // },
+    computed: {
+      avatar() {
+        return this.userInfo.wechat_info.avatar;
+      },
+      isRegistered() {
+        return this.userInfo.is_registed ? '已登记' : '未登记';
+      },
+      name() {
+        return this.userInfo.wechat_info.name;
+      },
+    },
     created() {
       const userInfo = JSON.parse(localStorage.getItem('UserInfo'));
       if (userInfo) {
@@ -69,6 +67,15 @@
 
 <style lang="scss" scoped>
   .home {
+    .icon {
+      font-size: 28px;
+      font-feature-settings: 'liga';
+      letter-spacing: normal;
+      line-height: 1;
+      position: relative;
+      text-indent: 0;
+      transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1), visibility 0s;
+    }
     .banner {
       width: 100%;
       height: 24.75rem;
@@ -100,31 +107,8 @@
         }
       }
     }
-
-    .tools {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      background-color: #ffffff;
-      padding: 10px 0;
-      line-height: normal;
-
-      .tools-item {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        .icon {
-          font-size: 28px;
-        }
-
-        .text {
-          font-size: 14px;
-          color: #808080;
-          margin-top: 1px;
-        }
-      }
+    .project {
+      border-top: 10px solid var(--main-border-color);
     }
   }
 </style>

@@ -21,6 +21,29 @@ Vue.config.productionTip = false;
 router.beforeEach(async (to, from, next) => {
   document.title = to.meta.title;
 
+  // if (store.state.refresh) {
+  //   try {
+  //     const userInfo = await store.dispatch('getUserInfo', window.location.search);
+  //     console.log('USERINFO: ', userInfo);
+  //     if (userInfo && store.state.identity === 'owner') {
+  //       store.state.identity = '';
+  //       next('/owner');
+  //     } else {
+  //       next();
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     next();
+  //   }
+  // } else {
+  //   if (to.path === '/owner') {
+  //     store.state.identity = '';
+  //     next();
+  //   } else {
+  //     next();
+  //   }
+  // }
+
   if (store.state.identity === 'owner') {
     store.state.identity = '';
     next('/owner');

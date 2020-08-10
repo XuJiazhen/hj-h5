@@ -1,18 +1,18 @@
 <template>
   <div class="owner">
     <router-view />
-    <v-bottom-navigation v-model="navigateTo" fixed grow color="#2a765a" @change="onNavItemClick">
-      <v-btn value="/home">
+    <v-bottom-navigation fixed grow color="#2a765a">
+      <v-btn to="/owner/home">
         <span>首页</span>
         <i class="icon iconfont icon-shouye"></i>
       </v-btn>
 
-      <v-btn value="/recommend">
+      <v-btn to="/owner/recommend">
         <span>推荐</span>
         <i class="icon iconfont icon-daohang"></i>
       </v-btn>
 
-      <v-btn value="/my">
+      <v-btn to="/owner/my">
         <span>我的</span>
         <i class="icon iconfont icon-anniu_gerenzhongxin"></i>
       </v-btn>
@@ -24,14 +24,7 @@
   export default {
     name: 'Owner',
     data() {
-      return {
-        navigateTo: '/home',
-      };
-    },
-    methods: {
-      onNavItemClick(v) {
-        this.$router.push(`/owner${v}`);
-      },
+      return {};
     },
   };
 </script>

@@ -48,6 +48,24 @@ const routes = [
         component: () => import('@/views/owner/my/index.vue'),
         meta: { title: '我的' },
       },
+      {
+        path: 'client',
+        name: 'Client',
+        component: () => import('@/views/owner/client/index.vue'),
+        meta: { title: '客户' },
+      },
+      {
+        path: 'clinch',
+        name: 'Clinch',
+        component: () => import('@/views/owner/clinch/index.vue'),
+        meta: { title: '成交' },
+      },
+      {
+        path: 'message',
+        name: 'Message',
+        component: () => import('@/views/owner/message/index.vue'),
+        meta: { title: '消息' },
+      },
     ],
   },
 ];

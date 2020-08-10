@@ -1,6 +1,6 @@
 <template>
   <div class="recommend">
-    <div class="banner">
+    <div class="main-title">
       <span>请填写下面的表格</span>
     </div>
     <div class="card">
@@ -114,15 +114,6 @@
       &::placeholder {
         color: #808080;
       }
-    }
-
-    .banner {
-      width: 100%;
-      height: 55px;
-      line-height: 55px;
-      text-align: center;
-      background-color: #ffffff;
-      font-size: 18px;
     }
 
     .card {
