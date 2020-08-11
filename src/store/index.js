@@ -9,19 +9,24 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     refresh: true,
-    userInfo: null,
+    wechatInfo: null,
+    realInfo: null,
     registered: false,
-    identity: 'consultant',
+    identity: '',
   },
   mutations: {
-    SET_USERINFO: (state, userInfo) => {
-      state.userInfo = userInfo;
-      state.registered = userInfo.is_registed;
+    SET_USERINFO: (state, data) => {
+      state.wechatInfo = data.wechat_info;
+      state.realInfo = data.local_info;
+      state.registered = data.is_registed;
+      state.identity = data.user_type;
       state.refresh = false;
     },
-    SET_REALINFO: (state, realInfo) => {
-      state.userInfo = realInfo.info;
-      state.registered = realInfo.info.is_registed;
+    SET_REALINFO: (state, data) => {
+      state.wechatInfo = data.info.wechat_info;
+      state.realInfo = data.info.local_info;
+      state.identity = data.info.identity;
+      state.registered = data.info.is_registed;
     },
   },
   actions: {
@@ -37,8 +42,8 @@ export default new Vuex.Store({
             } else {
               const { data } = res;
               commit('SET_USERINFO', data);
-              localStorage.setItem('UserInfo', JSON.stringify(data));
-              setToken(data.wechat_info.token);
+              localStorage.setItem('WechatInfo', JSON.stringify(data.wechat_info));
+              localStorage.setItem('RealInfo', JSON.stringify(data.local_info));
               resolve(data);
             }
           })
@@ -48,8 +53,12 @@ export default new Vuex.Store({
       });
     },
     userRegistered({ commit }, data) {
-      commit('SET_REALINFO', data);
-      return true;
+      if (data) {
+        localStorage.setItem('WechatInfo', JSON.stringify(data.info.wechat_info));
+        localStorage.setItem('RealInfo', JSON.stringify(data.info.local_info));
+        commit('SET_REALINFO', data);
+        return true;
+      }
     },
   },
   modules: {},

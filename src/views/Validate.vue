@@ -54,10 +54,9 @@
           const res = await submitForm(formData);
           console.log('RESPONSE: ', res);
           if (res && res.data) {
-            localStorage.setItem('UserInfo', JSON.stringify(res.data.info));
             this.$store.dispatch('userRegistered', res.data);
             console.log(res.data.msg);
-            this.$router.replace('/');
+            this.$router.replace('/owner');
           }
         }
       },

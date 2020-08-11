@@ -3,9 +3,6 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 
-import { getToken } from '@/utils/auth.js';
-import { getUserInfo, getAuthInfo } from '@/api/user.js';
-
 // STYLES
 import 'normalize.css/normalize.css';
 import '@/assets/styles/index.scss';
@@ -18,44 +15,70 @@ import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false;
 
+const whiteList = ['/validate', '/owner', '/validate'];
+
 router.beforeEach(async (to, from, next) => {
   document.title = to.meta.title;
 
   // ONLINE TEST CODE.
 
-  // if (store.state.refresh) {
-  //   try {
-  //     const userInfo = await store.dispatch('getUserInfo', window.location.search);
-  //     console.log('USERINFO: ', userInfo);
-  //     if (userInfo && store.state.identity === 'owner') {
-  //       store.state.identity = '';
-  //       next('/owner');
-  //     } else {
-  //       next();
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     next();
-  //   }
-  // } else {
-  //   if (to.path === '/owner') {
-  //     store.state.identity = '';
-  //     next();
-  //   } else {
-  //     next();
-  //   }
-  // }
+  if (store.state.refresh) {
+    try {
+      const userInfo = await store.dispatch('getUserInfo', window.location.search);
+      console.log('USERINFO: ', userInfo);
+      if (userInfo && !store.state.registered) {
+        console.log('未验证的用户，前往注册页面');
+        next('/validate');
+      } else {
+        if (store.state.identity === 'owner') {
+          console.log('IDENTITY: OWNER');
+          store.state.identity = '';
+          next('/owner');
+        } else if (store.state.identity === 'consultant') {
+          console.log('IDENTITY: CONSULTANT');
+          store.state.identity = '';
+          next('/consultant');
+        }
+      }
+      // if (userInfo && store.state.identity === 'owner') {
+      //   store.state.identity = '';
+      //   next('/owner');
+      // } else if (userInfo && store.state.identity === 'consultant') {
+      //   store.state.identity = '';
+      //   next('/consultant');
+      // } else {
+      //   next('/validate');
+      // }
+    } catch (error) {
+      console.log(error);
+      next();
+    }
+  } else {
+    if (whiteList.indexOf(to.path) !== -1) {
+      next();
+    }
+
+    // if (to.path === '/owner') {
+    //   store.state.identity = '';
+    //   next();
+    // } else if (to.path === '/consultant') {
+    //   store.state.identity = '';
+    //   next();
+    // } else if (to.path === '/validate') {
+    //   next();
+    // }
+  }
 
   // LOCAL TEST CODE.
 
-  if (store.state.identity === 'owner') {
-    store.state.identity = '';
-    next('/owner');
-  } else if (store.state.identity === 'consultant') {
-    store.state.identity = '';
-    next('/consultant');
-  }
-
+  // if (store.state.identity === 'owner') {
+  //   store.state.identity = '';
+  //   next('/owner');
+  // } else if (store.state.identity === 'consultant') {
+  //   store.state.identity = '';
+  //   next('/consultant');
+  // }
+  // console.log(router.currentRoute.path);
   next();
 });
 

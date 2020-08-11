@@ -53,7 +53,15 @@
     <button class="submit">提交</button>
 
     <v-overlay :value="overlay" :dark="false">
-      <v-date-picker class="date-picker" v-model="date" no-title color="var(--main-bg-color)" @change="onDateChange"></v-date-picker>
+      <v-date-picker
+        class="date-picker"
+        v-model="date"
+        no-title
+        color="var(--main-bg-color)"
+        @change="onDateChange"
+        :first-day-of-week="0"
+        locale="zh-cn"
+      ></v-date-picker>
       <v-btn icon @click="overlay = false" color="#ffffff">
         <v-icon>mdi-close</v-icon>
       </v-btn>

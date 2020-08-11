@@ -50,31 +50,30 @@
     name: 'Home',
     data() {
       return {
-        userInfo: null,
+        realInfo: null,
         total: 0,
-
-        name: '胥佳桢',
-        avatar: 'http://thirdwx.qlogo.cn/mmopen/vi_32/5rQ5OyUwWK51Ivx6tHVvVbRGd3V19IhA5O12SedXCIwdBUMF4QJQAkXzCaIktn0bcSjjIOdSEpRs288rYzByHA/132',
         identity: '置业顾问',
+
+        // name: '胥佳桢',
+        // avatar: 'http://thirdwx.qlogo.cn/mmopen/vi_32/5rQ5OyUwWK51Ivx6tHVvVbRGd3V19IhA5O12SedXCIwdBUMF4QJQAkXzCaIktn0bcSjjIOdSEpRs288rYzByHA/132',
+        // identity: '置业顾问',
       };
     },
-    // computed: {
-    //   avatar() {
-    //     return this.userInfo.wechat_info.avatar;
-    //   },
-    //   isRegistered() {
-    //     return this.userInfo.is_registed ? '已登记' : '未登记';
-    //   },
-    //   name() {
-    //     return this.userInfo.wechat_info.name;
-    //   },
-    // },
-    // created() {
-    //   const userInfo = JSON.parse(localStorage.getItem('UserInfo'));
-    //   if (userInfo) {
-    //     this.userInfo = userInfo;
-    //   }
-    // },
+    computed: {
+      avatar() {
+        return this.realInfo.avatar;
+      },
+      name() {
+        return this.realInfo.realname;
+      },
+    },
+    created() {
+      const realInfo = JSON.parse(localStorage.getItem('RealInfo'));
+
+      if (realInfo) {
+        this.realInfo = realInfo;
+      }
+    },
   };
 </script>
 
