@@ -40,15 +40,6 @@ router.beforeEach(async (to, from, next) => {
           next('/consultant');
         }
       }
-      // if (userInfo && store.state.identity === 'owner') {
-      //   store.state.identity = '';
-      //   next('/owner');
-      // } else if (userInfo && store.state.identity === 'consultant') {
-      //   store.state.identity = '';
-      //   next('/consultant');
-      // } else {
-      //   next('/validate');
-      // }
     } catch (error) {
       console.log(error);
       next();
@@ -57,16 +48,6 @@ router.beforeEach(async (to, from, next) => {
     if (whiteList.indexOf(to.path) !== -1) {
       next();
     }
-
-    // if (to.path === '/owner') {
-    //   store.state.identity = '';
-    //   next();
-    // } else if (to.path === '/consultant') {
-    //   store.state.identity = '';
-    //   next();
-    // } else if (to.path === '/validate') {
-    //   next();
-    // }
   }
 
   // LOCAL TEST CODE.
@@ -79,7 +60,6 @@ router.beforeEach(async (to, from, next) => {
   //   next('/consultant');
   // }
   // console.log(router.currentRoute.path);
-  next();
 });
 
 new Vue({
