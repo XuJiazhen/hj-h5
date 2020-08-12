@@ -51,6 +51,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   next();
+
   // LOCAL TEST CODE.
 
   // if (store.state.identity === 'owner') {
@@ -60,7 +61,8 @@ router.beforeEach(async (to, from, next) => {
   //   store.state.identity = '';
   //   next('/consultant');
   // }
-  // console.log(router.currentRoute.path);
+
+  // next();
 });
 
 new Vue({

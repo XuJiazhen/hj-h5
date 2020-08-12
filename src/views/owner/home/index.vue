@@ -7,7 +7,7 @@
       <span class="title">{{ name }}</span>
       <div class="features">
         <span class="identity">{{ isRegistered }}</span>
-        <span class="total">已推荐客户数：{{ total }} 人</span>
+        <!-- <span class="total">已推荐客户数：{{ total }} 人</span> -->
       </div>
     </div>
     <v-tabs centered grow color="#2a765a" icons-and-text optional height="55">
@@ -25,11 +25,7 @@
       </v-tab>
     </v-tabs>
 
-    <div class="msg-list">
-      <div class="main-title">
-        <span>项目详情-施工中</span>
-      </div>
-    </div>
+    <div class="msg-list"></div>
   </div>
 </template>
 

@@ -7,7 +7,7 @@
       <span class="title">{{ name }}</span>
       <div class="features">
         <span class="identity">{{ identity }}</span>
-        <span class="total">已推荐客户数：{{ total }} 人</span>
+        <span class="total">客户数：{{ clientList.length }} 人</span>
       </div>
     </div>
     <v-tabs centered grow color="#2a765a" icons-and-text optional height="55">
@@ -33,19 +33,37 @@
         业主
         <i class="icon iconfont icon-gerentouxiang"></i>
       </v-tab>
-      <v-tab to="/consultant/established">
-        已建佣
+      <v-tab to="/consultant/closed">
+        已结佣
         <i class="icon iconfont icon-tongzhizhongxin"></i>
       </v-tab>
     </v-tabs>
 
-    <div class="msg-list">
-      MSG LIST.
+    <div class="reported-title">
+      <span>最新报备</span>
+    </div>
+
+    <div class="client-list">
+      <div class="client-item" v-for="(item, index) in clientList" :key="index" @click="onClientItemClick(item.id, item.status)">
+        <div class="client-title">
+          <v-chip :color="color" label text-color="white" small>
+            <v-icon left>mdi-label</v-icon>
+            {{ item.status | statusFilter }}
+          </v-chip>
+        </div>
+        <div class="client-info">
+          <span class="name">{{ item.customer_name }}</span>
+          <span class="phone">{{ item.customer_phone }}</span>
+          <span class="date">{{ item.plan_time | dateFliter }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+  import { getClientList } from '@/api/user.js';
+
   export default {
     name: 'Home',
     data() {
@@ -53,6 +71,8 @@
         realInfo: null,
         total: 0,
         identity: '置业顾问',
+        clientList: [],
+        color: '#2a765a',
 
         // name: '胥佳桢',
         // avatar: 'http://thirdwx.qlogo.cn/mmopen/vi_32/5rQ5OyUwWK51Ivx6tHVvVbRGd3V19IhA5O12SedXCIwdBUMF4QJQAkXzCaIktn0bcSjjIOdSEpRs288rYzByHA/132',
@@ -64,21 +84,48 @@
         return this.realInfo.avatar;
       },
       name() {
-        return this.realInfo.realname;
+        return this.realInfo.name;
       },
     },
-    created() {
+    async created() {
       const realInfo = JSON.parse(localStorage.getItem('RealInfo'));
 
       if (realInfo) {
         this.realInfo = realInfo;
       }
+
+      try {
+        const res = await getClientList();
+        if (res && res.data) {
+          this.clientList = res.data.list.data;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    filters: {
+      dateFliter(v) {
+        const date = new Date(v);
+        return `${date.getFullYear()}年-${date.getMonth() + 1}月-${date.getDate()}日`;
+      },
+      statusFilter(v) {
+        return v === 0 ? '未确认' : '已确认';
+      },
+    },
+    methods: {
+      onClientItemClick(id, status) {
+        this.$router.push({ path: `/consultant/detail/${id}` });
+      },
     },
   };
 </script>
 
 <style lang="scss" scoped>
   .home {
+    width: 100%;
+    overflow: scroll;
+    margin-bottom: 56px;
+
     .icon {
       font-size: 28px;
       font-feature-settings: 'liga';
@@ -88,6 +135,7 @@
       text-indent: 0;
       transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1), visibility 0s;
     }
+
     .banner {
       width: 100%;
       height: 24.75rem;
@@ -119,9 +167,48 @@
         }
       }
     }
-    .msg-list {
-      border-top: 10px solid var(--main-border-color);
+
+    .reported-title {
+      width: 100%;
       text-align: center;
+      background-color: var(--main-border-color);
+      padding: 10px;
+      color: var(--sub-text-color);
+      font-size: 14px;
+    }
+
+    .client-list {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+
+      .client-item {
+        border-bottom: 10px solid var(--main-border-color);
+        width: 95%;
+        border-radius: 3px;
+        background-color: var(--white);
+        display: flex;
+        flex-direction: column;
+        padding: 0 15px;
+
+        .client-title {
+          border-bottom: 1px solid var(--main-border-color);
+          padding: 10px 0;
+        }
+
+        .client-info {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          text-align: center;
+          padding: 10px 0;
+        }
+      }
+
+      .list-item:last-child {
+        border-bottom: none;
+      }
     }
   }
 </style>

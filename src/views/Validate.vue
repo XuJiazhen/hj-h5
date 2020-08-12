@@ -14,6 +14,8 @@
       </div>
     </v-form>
 
+    <v-snackbar v-model="snackbar" timeout="1000" top :color="color" centered>{{ message }}</v-snackbar>
+
     <button class="submit" @click="onSubmitClick">提交</button>
   </div>
 </template>
@@ -26,17 +28,20 @@
     name: 'Report',
     data() {
       return {
-        name: '胥佳桢',
+        name: '',
         nameRules: [(v) => !!v || '请输入姓名', (v) => (v && v.length <= 6) || '姓名不得大于六个字符'],
-        phone: '18113008267',
+        phone: '',
         phoneRules: [(v) => !!v || '请输入手机号', (v) => /^1[3-9]\d{9}$/.test(v) || '请输入正确的手机号'],
-        building: '0',
+        building: '',
         buildingRules: [(v) => !!v || '请输入所在栋数'],
-        level: '10',
+        level: '',
         levelRules: [(v) => !!v || '请输入所在楼层数'],
-        room: '01',
+        room: '',
         roomRules: [(v) => !!v || '请输入所在房间号'],
         valid: true,
+        message: '',
+        color: '',
+        snackbar: false,
       };
     },
     methods: {
@@ -51,12 +56,26 @@
           };
           console.log('FORM DATA: ', formData);
 
-          const res = await submitForm(formData);
-          console.log('RESPONSE: ', res);
-          if (res && res.data) {
-            this.$store.dispatch('userRegistered', res.data);
-            console.log(res.data.msg);
+          // if (res && res.status === 200) {
+          //   this.$store.dispatch('userRegistered', res.data);
+          //   console.log(res.data.msg);
+          //   this.$router.replace('/owner');
+          // }
+          try {
+            const res = await submitForm(formData);
+            console.log('RESPONSE: ', res);
+            if (res && res.status !== 200) {
+              this.message = res.data.msg;
+              this.color = 'error';
+              this.snackbar = true;
+              return;
+            }
+            this.message = '验证成功';
+            this.color = 'success';
+            this.snackbar = true;
             this.$router.replace('/owner');
+          } catch (error) {
+            console.log(error);
           }
         }
       },

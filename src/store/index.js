@@ -12,7 +12,7 @@ export default new Vuex.Store({
     wechatInfo: null,
     realInfo: null,
     registered: false,
-    identity: '',
+    identity: 'owner',
   },
   mutations: {
     SET_USERINFO: (state, data) => {

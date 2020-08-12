@@ -9,7 +9,33 @@ export function getUserInfo(code) {
 
 export function getAuthInfo() {
   return request({
-    url: `/auth`,
+    url: '/auth',
     method: 'get',
+  });
+}
+
+export function getClientList() {
+  return request({
+    url: '/report/list',
+    method: 'get',
+  });
+}
+
+export function getClientDetail(id) {
+  return request({
+    url: '/report/info',
+    method: 'get',
+    params: { id },
+  });
+}
+
+export function updateClientState(id, status) {
+  return request({
+    url: '/report/check',
+    method: 'put',
+    data: {
+      id,
+      status,
+    },
   });
 }

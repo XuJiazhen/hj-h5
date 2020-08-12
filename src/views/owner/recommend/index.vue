@@ -1,9 +1,9 @@
 <template>
   <div class="recommend">
-    <div class="main-title">
+    <div class="re-title">
       <span>请填写下面的表格</span>
     </div>
-    <div class="card">
+    <div class="re-card">
       <div class="form-item">
         <div class="icon">
           <i class="iconfont icon-jianzhu" />
@@ -18,7 +18,7 @@
           <i class="iconfont icon-gerentouxiang" />
         </div>
         <span class="title">客户姓名<span class="required">*</span></span>
-        <input type="text" placeholder="请输入客户姓名" v-model="userName" />
+        <input type="text" placeholder="请输入客户姓名" v-model="name" />
       </div>
 
       <div class="form-item">
@@ -26,11 +26,11 @@
           <i class="iconfont icon-shouji" />
         </div>
         <span class="title">手机号码<span class="required">*</span></span>
-        <input type="text" placeholder="请输入手机号码" v-model="phoneNumber" />
+        <input type="text" placeholder="请输入手机号码" v-model="phone" />
       </div>
     </div>
 
-    <div class="card">
+    <div class="re-card">
       <div class="form-item" @click="onSelectGender">
         <div class="icon">
           <i class="iconfont icon-gerentouxiang" />
@@ -50,7 +50,7 @@
       </div>
     </div>
 
-    <button class="submit">提交</button>
+    <button class="submit" @click="onClick">提交</button>
 
     <v-overlay :value="overlay" :dark="false">
       <v-date-picker
@@ -75,22 +75,29 @@
         </v-radio-group>
       </v-sheet>
     </v-bottom-sheet>
+
+    <v-snackbar v-model="snackbar" timeout="1000" top :color="color" centered>{{ message }}</v-snackbar>
   </div>
 </template>
 
 <script>
+  import { submitForm } from '@/api/recommend.js';
   export default {
     name: 'Recommend',
     data() {
       return {
-        project: '南方花园',
-        userName: '',
-        phoneNumber: '',
+        project: '香和·南方花园',
+        name: '',
+        phone: '',
         gender: '',
         date: '',
         remark: '',
         overlay: false,
         sheet: false,
+        snackbar: false,
+        message: '',
+        color: '',
+        valid: false,
       };
     },
     methods: {
@@ -105,6 +112,55 @@
       },
       onSelectGender() {
         this.sheet = true;
+      },
+      onClick() {
+        const formData = {
+          bind_project: this.project === '香和·南方花园' ? 1 : 0,
+          customer_name: this.name,
+          customer_phone: this.phone,
+          sex: this.gender,
+          plan_time: this.date,
+        };
+        for (let key in formData) {
+          if (formData[key] !== '') {
+            this.valid = true;
+          } else {
+            this.message = '请填写所有信息';
+            this.color = 'error';
+            this.snackbar = true;
+            return;
+          }
+        }
+        this.submit(formData);
+      },
+      async submit(data) {
+        if (this.valid) {
+          if (!/^1[3-9]\d{9}$/.test(data.customer_phone)) {
+            this.message = '请填写正确的手机号';
+            this.color = 'error';
+            this.snackbar = true;
+            return;
+          }
+          try {
+            const res = await submitForm(data);
+            if (res && res.status === 200) {
+              this.name = '';
+              this.phone = '';
+              this.gender = '';
+              this.date = '';
+              this.message = '推荐成功';
+              this.color = 'success';
+              this.snackbar = true;
+            }
+          } catch (error) {
+            console.log(error);
+            this.message = '推荐失败';
+            this.color = 'error';
+            this.snackbar = true;
+          }
+        } else {
+          return;
+        }
       },
     },
   };
@@ -126,7 +182,16 @@
       }
     }
 
-    .card {
+    .re-title {
+      width: 100%;
+      height: 56px;
+      line-height: 56px;
+      text-align: center;
+      background-color: #ffffff;
+      font-size: 18px;
+    }
+
+    .re-card {
       width: 95%;
       margin: 10px auto;
       background-color: #ffffff;
@@ -200,6 +265,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+    }
+    .v-snack__content {
+      text-align: center;
     }
   }
 </style>

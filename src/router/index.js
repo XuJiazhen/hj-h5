@@ -89,6 +89,18 @@ const routes = [
         component: () => import('@/views/consultant/my/index.vue'),
         meta: { title: '我的' },
       },
+      {
+        path: 'reported',
+        name: 'Reported',
+        component: () => import('@/views/consultant/reported/index.vue'),
+        meta: { title: '已报备' },
+      },
+      {
+        path: 'detail/:id',
+        name: 'Detail',
+        component: () => import('@/views/consultant/detail/index.vue'),
+        meta: { title: '客户详情' },
+      },
     ],
   },
 ];
