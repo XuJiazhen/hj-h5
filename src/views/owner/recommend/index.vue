@@ -118,6 +118,8 @@
     input {
       border: none;
       text-align: right;
+      height: 100%;
+      outline: none;
 
       &::placeholder {
         color: #808080;

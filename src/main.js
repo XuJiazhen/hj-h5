@@ -50,6 +50,7 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 
+  next();
   // LOCAL TEST CODE.
 
   // if (store.state.identity === 'owner') {
