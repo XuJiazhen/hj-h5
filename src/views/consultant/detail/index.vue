@@ -5,16 +5,16 @@
         <span>客户信息</span>
       </div>
       <div class="owner-info">
-        <span class="name">{{ clientDetail.owner.realname }}</span>
-        <span class="phone">{{ clientDetail.owner.cellphone }}</span>
+        <span class="name">姓名：{{ clientDetail.owner.realname }}</span>
+        <span class="phone">电话：{{ clientDetail.owner.cellphone }}</span>
       </div>
       <div class="client-title">
         <span>推荐人信息</span>
       </div>
       <div class="client-info">
-        <span class="name">{{ clientDetail.customer_name }}</span>
-        <span class="phone">{{ clientDetail.customer_phone }}</span>
-        <span class="date">{{ clientDetail.plan_time }}</span>
+        <span class="name">姓名：{{ clientDetail.customer_name }}</span>
+        <span class="phone">电话：{{ clientDetail.customer_phone }}</span>
+        <span class="date">预约日期：{{ clientDetail.plan_time | dateFliter }}</span>
       </div>
     </div>
 
@@ -70,6 +70,12 @@
         }
       },
     },
+    filters: {
+      dateFliter(v) {
+        const date = new Date(v);
+        return `${date.getFullYear()}年-${date.getMonth() + 1}月-${date.getDate()}日`;
+      },
+    },
   };
 </script>
 
@@ -90,22 +96,27 @@
       .owner-title,
       .client-title {
         width: 100%;
-        border-bottom: 1px solid var(--main-border-color);
+        border-bottom: 1px solid var(--main-bg-color);
         box-sizing: border-box;
 
         span {
           display: block;
           padding: 10px 5px;
-          margin-left: 5px;
+          border-left: 10px solid var(--main-bg-color);
         }
       }
 
       .owner-info,
       .client-info {
         width: 100%;
-        padding: 10px 5px;
+        padding: 10px 15px;
         display: flex;
         flex-direction: column;
+
+        span {
+          padding: 10px 0;
+          border-bottom: 1px solid var(--main-border-color);
+        }
       }
     }
 

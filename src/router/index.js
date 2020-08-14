@@ -101,6 +101,36 @@ const routes = [
         component: () => import('@/views/consultant/detail/index.vue'),
         meta: { title: '客户详情' },
       },
+      {
+        path: 'visited',
+        name: 'Visited',
+        component: () => import('@/views/consultant/visited/index.vue'),
+        meta: { title: '已到访' },
+      },
+      {
+        path: 'traded',
+        name: 'Traded',
+        component: () => import('@/views/consultant/traded/index.vue'),
+        meta: { title: '已成交' },
+      },
+      {
+        path: 'signed',
+        name: 'Signed',
+        component: () => import('@/views/consultant/signed/index.vue'),
+        meta: { title: '已签约' },
+      },
+      {
+        path: 'owner',
+        name: 'Owner',
+        component: () => import('@/views/consultant/owner/index.vue'),
+        meta: { title: '业主' },
+      },
+      {
+        path: 'closed',
+        name: 'Closed',
+        component: () => import('@/views/consultant/closed/index.vue'),
+        meta: { title: '已结佣' },
+      },
     ],
   },
 ];

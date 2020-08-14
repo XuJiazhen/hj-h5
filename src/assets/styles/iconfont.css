@@ -11,6 +11,46 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-editor:before {
+  content: '\e6f6';
+}
+
+.icon-integral:before {
+  content: '\e6f9';
+}
+
+.icon-certified-supplier:before {
+  content: '\e747';
+}
+
+.icon-confirm:before {
+  content: '\e749';
+}
+
+.icon-Customermanagement:before {
+  content: '\e74b';
+}
+
+.icon-remind:before {
+  content: '\e75f';
+}
+
+.icon-trust:before {
+  content: '\e76a';
+}
+
+.icon-viewlist:before {
+  content: '\e76d';
+}
+
+.icon-usercenter:before {
+  content: '\e773';
+}
+
+.icon-account:before {
+  content: '\e7b2';
+}
+
 .icon-rili:before {
   content: '\eb2b';
 }

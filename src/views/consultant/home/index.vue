@@ -13,29 +13,29 @@
     <v-tabs centered grow color="#2a765a" icons-and-text optional height="55">
       <v-tab to="/consultant/reported" active-class="test">
         已报备
-        <i class="icon iconfont icon-tongzhizhongxin"></i>
+        <i class="icon iconfont icon-viewlist"></i>
       </v-tab>
       <v-tab to="/consultant/visited">
         已到访
-        <i class="icon iconfont icon-tongzhizhongxin"></i>
+        <i class="icon iconfont icon-remind"></i>
       </v-tab>
       <v-tab to="/consultant/traded">
         已成交
-        <i class="icon iconfont icon-tongzhizhongxin"></i>
+        <i class="icon iconfont icon-trust"></i>
       </v-tab>
     </v-tabs>
-    <v-tabs centered grow color="#2a765a" icons-and-text optional height="55">
+    <v-tabs centered grow color="#2a765a" icons-and-text optional height="55" style="border-top: 10px solid #ffffff;">
       <v-tab to="/consultant/signed" active-class="test">
         已签约
-        <i class="icon iconfont icon-tongzhizhongxin"></i>
+        <i class="icon iconfont icon-confirm"></i>
       </v-tab>
       <v-tab to="/consultant/owner">
         业主
-        <i class="icon iconfont icon-gerentouxiang"></i>
+        <i class="icon iconfont icon-Customermanagement"></i>
       </v-tab>
       <v-tab to="/consultant/closed">
         已结佣
-        <i class="icon iconfont icon-tongzhizhongxin"></i>
+        <i class="icon iconfont icon-integral"></i>
       </v-tab>
     </v-tabs>
 
@@ -138,7 +138,7 @@
 
     .banner {
       width: 100%;
-      height: 24.75rem;
+      height: 18.75rem;
       background-color: var(--main-bg-color);
       background-image: url('../../../assets/images/banner.jpg');
       background-repeat: no-repeat;
