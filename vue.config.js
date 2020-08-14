@@ -1,6 +1,6 @@
 module.exports = {
   transpileDependencies: ['vuetify'],
   configureWebpack: {
-    name: '南方花园',
+    name: '香河·南方花园',
   },
 };
