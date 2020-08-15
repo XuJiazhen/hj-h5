@@ -26,7 +26,7 @@
           <i class="iconfont icon-shouji" />
         </div>
         <span class="title">手机号码<span class="required">*</span></span>
-        <input type="text" placeholder="请输入手机号码" v-model="phone" />
+        <input type="number" placeholder="请输入手机号码" v-model="phone" />
       </div>
     </div>
 

@@ -9,3 +9,9 @@
     name: 'App',
   };
 </script>
+
+<style>
+  #nprogress .bar {
+    background: var(--main-bg-color) !important;
+  }
+</style>

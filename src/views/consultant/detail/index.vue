@@ -47,8 +47,9 @@
           this.clientDetail = res.data.data;
         }
       } catch (error) {
-        console.log(error);
+        console.log('CREATED ERROR: ', error);
       }
+      console.log('CLIENT DETAIL: ', this.clientDetail);
     },
     methods: {
       async onConfirm() {
