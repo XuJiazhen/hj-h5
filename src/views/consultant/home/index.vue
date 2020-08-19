@@ -98,7 +98,6 @@
 
       try {
         const res = await getClientList();
-        console.log('CLIENT LIST:', res);
         if (res && res.data) {
           this.clientList = res.data.list.data;
           NProgress.done();
