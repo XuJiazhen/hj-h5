@@ -90,16 +90,12 @@
         const date = new Date(String(v).replace(/-/g, '/'));
         return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
       },
-      statusFilter(v) {
-        return v === 1 ? '已报备' : '未报备';
-      },
     },
     methods: {
       async onConfirm(id, index) {
         try {
           const res = await updateClientState(id, this.nextStatus);
           if (res && res.status === 200) {
-            console.log(res);
             this.message = res.data.msg;
             this.color = 'success';
             this.snackbar = true;
@@ -112,8 +108,21 @@
           console.log(error);
         }
       },
-      onDelete(id, index) {
-        console.log('DELETE');
+      async onDelete(id, index) {
+        try {
+          const res = await updateClientState(id, 6);
+          if (res && res.status === 200) {
+            this.message = res.data.msg;
+            this.color = 'success';
+            this.snackbar = true;
+            this.clientList.pop(index);
+          } else {
+            this.message = '操作失败';
+            this.color = 'error';
+          }
+        } catch (error) {
+          console.log(error);
+        }
       },
     },
   };

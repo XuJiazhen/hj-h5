@@ -15,7 +15,7 @@
       return {
         curTitle: '结佣',
         confirmTitle: '订单完成',
-        curStatus: 6,
+        curStatus: 4,
         nextStatus: 5
       };
     },

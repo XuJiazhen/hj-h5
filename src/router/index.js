@@ -120,10 +120,10 @@ const routes = [
         meta: { title: '已签约' },
       },
       {
-        path: 'owner',
-        name: 'Owner',
-        component: () => import('@/views/consultant/owner/index.vue'),
-        meta: { title: '业主' },
+        path: 'client',
+        name: 'Client',
+        component: () => import('@/views/consultant/client/index.vue'),
+        meta: { title: '客户' },
       },
       {
         path: 'closed',

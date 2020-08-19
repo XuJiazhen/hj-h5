@@ -29,8 +29,8 @@
         已签约
         <i class="icon iconfont icon-confirm"></i>
       </v-tab>
-      <v-tab to="/consultant/owner">
-        业主
+      <v-tab to="/consultant/client">
+        客户
         <i class="icon iconfont icon-Customermanagement"></i>
       </v-tab>
       <v-tab to="/consultant/closed">

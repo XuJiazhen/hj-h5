@@ -1,11 +1,17 @@
 <template>
-  <div class="client">
+  <div class="client-list">
     <div class="main-title">
-      <span>已推荐 {{ clientList.length }} 个客户</span>
+      <span>共 {{ clientList.length }} 个客户</span>
     </div>
-    <div class="client-list">
-      <div class="client-item" v-for="(item, index) in clientList.length && clientList" :key="index">
-        <div class="client-title">
+    <div class="main-list">
+      <div class="list-item" v-for="(item, index) in clientList.length && clientList" :key="index">
+        <div class="item-title">
+          <template v-if="item.status === 0">
+            <v-chip color="#2a765a" label text-color="white" small>
+              <v-icon left>mdi-label</v-icon>
+              未确认
+            </v-chip>
+          </template>
           <template v-if="item.status === 1">
             <v-chip color="#cfa26b" label text-color="white" small>
               <v-icon left>mdi-label</v-icon>
@@ -48,27 +54,30 @@
             </v-chip>
           </template>
         </div>
-        <div class="client-info">
+        <div class="item-info">
           <span class="name">{{ item.customer_name }}</span>
           <span class="phone">{{ item.customer_phone }}</span>
           <span class="date">{{ item.plan_time | dateFilter }}</span>
         </div>
       </div>
     </div>
+    <v-snackbar v-model="snackbar" timeout="1000" top :color="color" centered>{{ message }}</v-snackbar>
   </div>
 </template>
 
 <script>
-  import { getClientList } from '@/api/user.js';
+  import { getReportedList, updateClientState } from '@/api/user.js';
   import NProgress from 'nprogress';
   import 'nprogress/nprogress.css';
 
   export default {
-    name: 'Client',
+    name: 'client-list',
     data() {
       return {
         clientList: [],
-        color: '#2a765a',
+        snackbar: false,
+        color: '',
+        message: '',
       };
     },
     async created() {
@@ -76,7 +85,7 @@
       NProgress.configure({ easing: 'ease', speed: 500, showSpinner: false });
       NProgress.start();
       try {
-        const res = await getClientList();
+        const res = await getReportedList('all');
         if (res && res.data) {
           this.clientList = res.data.list.data;
           NProgress.done();
@@ -90,59 +99,18 @@
         const date = new Date(String(v).replace(/-/g, '/'));
         return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
       },
-      statusFilter(v) {
-        let state;
-        switch (v) {
-          case 0: {
-            state = '未确认';
-            break;
-          }
-
-          case 1: {
-            state = '已报备';
-            break;
-          }
-
-          case 2: {
-            state = '已到访';
-            break;
-          }
-
-          case 3: {
-            state = '已成交';
-            break;
-          }
-
-          case 4: {
-            state = '已签约';
-            break;
-          }
-
-          case 5: {
-            state = '已作废';
-            break;
-          }
-          case 6: {
-            state = '已结佣';
-            break;
-          }
-          default:
-            break;
-        }
-        return state;
-      },
     },
   };
 </script>
 
 <style lang="scss" scoped>
-  .client {
+  .client-list {
     width: 100%;
     margin-top: 56px;
     margin-bottom: 56px;
     overflow: scroll;
 
-    .client-list {
+    .main-list {
       border-top: 10px solid var(--main-border-color);
       display: flex;
       flex-direction: column;
@@ -150,7 +118,7 @@
       justify-content: center;
       align-items: center;
 
-      .client-item {
+      .list-item {
         border-bottom: 10px solid var(--main-border-color);
         width: 95%;
         border-radius: 3px;
@@ -159,12 +127,15 @@
         flex-direction: column;
         padding: 0 15px;
 
-        .client-title {
+        .item-title {
           border-bottom: 1px solid var(--main-border-color);
           padding: 10px 0;
+          display: flex;
+          justify-content: space-between;
+          align-content: center;
         }
 
-        .client-info {
+        .item-info {
           display: grid;
           grid-template-columns: 1fr 1fr 1fr;
           text-align: center;
