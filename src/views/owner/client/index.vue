@@ -31,8 +31,8 @@
 
 <script>
   import { getClientList } from '@/api/user.js';
-  import NProgress from 'nprogress'; // progress bar
-  import 'nprogress/nprogress.css'; // progress bar style
+  import NProgress from 'nprogress';
+  import 'nprogress/nprogress.css';
 
   export default {
     name: 'Client',
@@ -50,12 +50,10 @@
         const res = await getClientList();
         if (res && res.data) {
           this.clientList = res.data.list.data;
+          NProgress.done();
         }
       } catch (error) {
         console.log(error);
-      }
-      if (this.clientList.length) {
-        NProgress.done();
       }
     },
     filters: {

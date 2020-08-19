@@ -28,16 +28,16 @@ router.beforeEach(async (to, from, next) => {
       console.log('USERINFO: ', userInfo);
       if (userInfo && !store.state.registered) {
         console.log('未验证的用户，前往注册页面');
-        next('/validate');
+        next({ path: '/validate', replace: true });
       } else {
         if (store.state.identity === 'owner') {
           console.log('IDENTITY: OWNER');
           store.state.identity = '';
-          next('/owner');
+          next({ path: '/owner', replace: true });
         } else if (store.state.identity === 'consultant') {
           console.log('IDENTITY: CONSULTANT');
           store.state.identity = '';
-          next('/consultant');
+          next({ path: '/consultant', replace: true });
         }
       }
     } catch (error) {

@@ -69,7 +69,7 @@
 
     <v-bottom-sheet v-model="sheet">
       <v-sheet class="text-center" height="100px">
-        <v-radio-group v-model="gender" :mandatory="false">
+        <v-radio-group v-model="gender" :mandatory="false" @change="onRadioChange">
           <v-radio style="margin: 10px auto;" label="男" value="男"></v-radio>
           <v-radio style="margin: 10px auto;" label="女" value="女"></v-radio>
         </v-radio-group>
@@ -112,6 +112,9 @@
       },
       onSelectGender() {
         this.sheet = true;
+      },
+      onRadioChange() {
+        this.sheet = false;
       },
       onClick() {
         const formData = {

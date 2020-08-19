@@ -21,6 +21,14 @@ export function getClientList() {
   });
 }
 
+export function getReportedList(status) {
+  return request({
+    url: '/report/list',
+    method: 'get',
+    params: { status },
+  });
+}
+
 export function getClientDetail(id) {
   return request({
     url: '/report/info',

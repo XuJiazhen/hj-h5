@@ -44,7 +44,7 @@
     </div>
 
     <div class="client-list">
-      <div class="client-item" v-for="(item, index) in clientList" :key="index" @click="onClientItemClick(item.id, item.status)">
+      <div class="client-item" v-for="(item, index) in clientList.length && clientList" :key="index" @click="onClientItemClick(item.id, item.status)">
         <div class="client-title">
           <v-chip :color="color" label text-color="white" small>
             <v-icon left>mdi-label</v-icon>
@@ -54,7 +54,7 @@
         <div class="client-info">
           <span class="name">{{ item.customer_name }}</span>
           <span class="phone">{{ item.customer_phone }}</span>
-          <span class="date">{{ item.plan_time | dateFliter }}</span>
+          <span class="date">{{ item.plan_time | dateFilter }}</span>
         </div>
       </div>
     </div>
@@ -63,6 +63,8 @@
 
 <script>
   import { getClientList } from '@/api/user.js';
+  import NProgress from 'nprogress';
+  import 'nprogress/nprogress.css';
 
   export default {
     name: 'Home',
@@ -73,10 +75,6 @@
         identity: '置业顾问',
         clientList: [],
         color: '#2a765a',
-
-        // name: '胥佳桢',
-        // avatar: 'http://thirdwx.qlogo.cn/mmopen/vi_32/5rQ5OyUwWK51Ivx6tHVvVbRGd3V19IhA5O12SedXCIwdBUMF4QJQAkXzCaIktn0bcSjjIOdSEpRs288rYzByHA/132',
-        // identity: '置业顾问',
       };
     },
     computed: {
@@ -88,6 +86,10 @@
       },
     },
     async created() {
+      NProgress.inc(0.2);
+      NProgress.configure({ easing: 'ease', speed: 500, showSpinner: false });
+      NProgress.start();
+
       const realInfo = JSON.parse(localStorage.getItem('RealInfo'));
 
       if (realInfo) {
@@ -96,17 +98,19 @@
 
       try {
         const res = await getClientList();
+        console.log('CLIENT LIST:', res);
         if (res && res.data) {
           this.clientList = res.data.list.data;
+          NProgress.done();
         }
       } catch (error) {
         console.log(error);
       }
     },
     filters: {
-      dateFliter(v) {
-        const date = new Date(v);
-        return `${date.getFullYear()}年-${date.getMonth() + 1}月-${date.getDate()}日`;
+      dateFilter(v) {
+        const date = new Date(String(v).replace(/-/g, '/'));
+        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
       },
       statusFilter(v) {
         return v === 0 ? '未确认' : '已确认';

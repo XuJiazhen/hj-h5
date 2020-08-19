@@ -5,16 +5,16 @@
         <span>客户信息</span>
       </div>
       <div class="owner-info">
-        <span class="name">姓名：{{ clientDetail.owner.realname }}</span>
-        <span class="phone">电话：{{ clientDetail.owner.cellphone }}</span>
+        <span class="name">姓名：{{ clientDetail && clientDetail.owner.realname }}</span>
+        <span class="phone">电话：{{ clientDetail && clientDetail.owner.cellphone }}</span>
       </div>
       <div class="client-title">
         <span>推荐人信息</span>
       </div>
       <div class="client-info">
-        <span class="name">姓名：{{ clientDetail.customer_name }}</span>
-        <span class="phone">电话：{{ clientDetail.customer_phone }}</span>
-        <span class="date">预约日期：{{ clientDetail.plan_time | dateFliter }}</span>
+        <span class="name">姓名：{{ clientDetail && clientDetail.customer_name }}</span>
+        <span class="phone">电话：{{ clientDetail && clientDetail.customer_phone }}</span>
+        <span class="date">预约日期：{{ clientDetail && clientDetail.plan_time | dateFilter }}</span>
       </div>
     </div>
 
@@ -49,7 +49,6 @@
       } catch (error) {
         console.log('CREATED ERROR: ', error);
       }
-      console.log('CLIENT DETAIL: ', this.clientDetail);
     },
     methods: {
       async onConfirm() {
@@ -72,9 +71,9 @@
       },
     },
     filters: {
-      dateFliter(v) {
-        const date = new Date(v);
-        return `${date.getFullYear()}年-${date.getMonth() + 1}月-${date.getDate()}日`;
+      dateFilter(v) {
+        const date = new Date(String(v).replace(/-/g, '/'));
+        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
       },
     },
   };

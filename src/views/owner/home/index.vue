@@ -29,82 +29,78 @@
 </template>
 
 <script>
-export default {
-  name: 'Home',
-  data() {
-    return {
-      realInfo: null,
-      total: 0,
-
-      // name: '胥佳桢',
-      // avatar: 'http://thirdwx.qlogo.cn/mmopen/vi_32/5rQ5OyUwWK51Ivx6tHVvVbRGd3V19IhA5O12SedXCIwdBUMF4QJQAkXzCaIktn0bcSjjIOdSEpRs288rYzByHA/132',
-      // isRegistered: '已登记',
-    };
-  },
-  computed: {
-    avatar() {
-      return this.realInfo.avatar;
+  export default {
+    name: 'Home',
+    data() {
+      return {
+        realInfo: null,
+        total: 0,
+      };
     },
-    isRegistered() {
-      return this.$store.state.registered ? '已登记' : '未登记';
+    computed: {
+      avatar() {
+        return this.realInfo.avatar;
+      },
+      isRegistered() {
+        return this.$store.state.registered ? '已登记' : '未登记';
+      },
+      name() {
+        return this.realInfo.realname;
+      },
     },
-    name() {
-      return this.realInfo.realname;
+    created() {
+      const realInfo = JSON.parse(localStorage.getItem('RealInfo'));
+      if (realInfo) {
+        this.realInfo = realInfo;
+      }
     },
-  },
-  created() {
-    const realInfo = JSON.parse(localStorage.getItem('RealInfo'));
-    if (realInfo) {
-      this.realInfo = realInfo;
-    }
-  },
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-.home {
-  .icon {
-    font-size: 28px;
-    font-feature-settings: 'liga';
-    letter-spacing: normal;
-    line-height: 1;
-    position: relative;
-    text-indent: 0;
-    transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1), visibility 0s;
-  }
-  .banner {
-    width: 100%;
-    height: 24.75rem;
-    background-color: var(--main-bg-color);
-    background-image: url('../../../assets/images/banner.jpg');
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    .title {
-      margin: 20px 0;
-      font-size: 18px;
-      font-weight: bold;
+  .home {
+    .icon {
+      font-size: 28px;
+      font-feature-settings: 'liga';
+      letter-spacing: normal;
+      line-height: 1;
+      position: relative;
+      text-indent: 0;
+      transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1), visibility 0s;
     }
-
-    .features {
-      font-size: 14px;
+    .banner {
+      width: 100%;
+      height: 24.75rem;
+      background-color: var(--main-bg-color);
+      background-image: url('../../../assets/images/banner.jpg');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
       color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
 
-      span {
-        border: 1px solid #ffffff;
-        padding: 5px 10px;
-        border-radius: 10px;
-        margin: 0 5px;
+      .title {
+        margin: 20px 0;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .features {
+        font-size: 14px;
+        color: #ffffff;
+
+        span {
+          border: 1px solid #ffffff;
+          padding: 5px 10px;
+          border-radius: 10px;
+          margin: 0 5px;
+        }
       }
     }
+    .msg-list {
+      border-top: 10px solid var(--main-border-color);
+    }
   }
-  .msg-list {
-    border-top: 10px solid var(--main-border-color);
-  }
-}
 </style>

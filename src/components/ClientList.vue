@@ -1,23 +1,29 @@
 <template>
-  <div class="traded">
+  <div class="client-list">
     <div class="main-title">
-      <span>{{ clientList.length }} 个客户已成交</span>
+      <span>{{ clientList.length }} 个客户已{{ curTitle }}</span>
     </div>
-    <div class="client-list">
-      <div class="client-item" v-for="(item, index) in clientList.length && clientList" :key="index">
-        <div class="client-title">
+    <div class="main-list">
+      <div class="list-item" v-for="(item, index) in clientList.length && clientList" :key="index">
+        <div class="item-title">
           <v-chip color="#1a3751" label text-color="white" small>
             <v-icon left>mdi-label</v-icon>
-            {{ item.status | statusFilter }}
+            已{{ curTitle }}
           </v-chip>
-          <v-chip color="teal" text-color="white" small label @click="onConfirm(item.id, 4, index)">
+          <v-chip color="teal" text-color="white" small label @click="onConfirm(item.id, index)">
             <v-avatar left>
               <v-icon>mdi-checkbox-marked-circle</v-icon>
             </v-avatar>
-            确认用户签约
+            确认用户{{ confirmTitle }}
+          </v-chip>
+          <v-chip color="error" text-color="white" small label @click="onDelete(item.id, index)">
+            <v-avatar left>
+              <v-icon>mdi-delete-circle</v-icon>
+            </v-avatar>
+            作废
           </v-chip>
         </div>
-        <div class="client-info">
+        <div class="item-info">
           <span class="name">{{ item.customer_name }}</span>
           <span class="phone">{{ item.customer_phone }}</span>
           <span class="date">{{ item.plan_time | dateFilter }}</span>
@@ -34,7 +40,29 @@
   import 'nprogress/nprogress.css';
 
   export default {
-    name: 'Traded',
+    name: 'client-list',
+    props: {
+      curTitle: {
+        type: String,
+        required: true,
+      },
+      confirmTitle: {
+        type: String,
+        required: true,
+      },
+      curStatus: {
+        type: Number,
+        required: true,
+      },
+      nextStatus: {
+        type: Number,
+        required: true,
+      },
+      nextStatus: {
+        type: Number,
+        required: true,
+      },
+    },
     data() {
       return {
         clientList: [],
@@ -48,7 +76,7 @@
       NProgress.configure({ easing: 'ease', speed: 500, showSpinner: false });
       NProgress.start();
       try {
-        const res = await getReportedList(3);
+        const res = await getReportedList(this.curStatus);
         if (res && res.data) {
           this.clientList = res.data.list.data;
           NProgress.done();
@@ -63,13 +91,13 @@
         return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
       },
       statusFilter(v) {
-        return v === 3 ? '已成交' : '未成交';
+        return v === 1 ? '已报备' : '未报备';
       },
     },
     methods: {
-      async onConfirm(id, status, index) {
+      async onConfirm(id, index) {
         try {
-          const res = await updateClientState(id, status);
+          const res = await updateClientState(id, this.nextStatus);
           if (res && res.status === 200) {
             console.log(res);
             this.message = res.data.msg;
@@ -84,18 +112,21 @@
           console.log(error);
         }
       },
+      onDelete(id, index) {
+        console.log('DELETE');
+      },
     },
   };
 </script>
 
 <style lang="scss" scoped>
-  .traded {
+  .client-list {
     width: 100%;
     margin-top: 56px;
     margin-bottom: 56px;
     overflow: scroll;
 
-    .client-list {
+    .main-list {
       border-top: 10px solid var(--main-border-color);
       display: flex;
       flex-direction: column;
@@ -103,7 +134,7 @@
       justify-content: center;
       align-items: center;
 
-      .client-item {
+      .list-item {
         border-bottom: 10px solid var(--main-border-color);
         width: 95%;
         border-radius: 3px;
@@ -112,7 +143,7 @@
         flex-direction: column;
         padding: 0 15px;
 
-        .client-title {
+        .item-title {
           border-bottom: 1px solid var(--main-border-color);
           padding: 10px 0;
           display: flex;
@@ -120,7 +151,7 @@
           align-content: center;
         }
 
-        .client-info {
+        .item-info {
           display: grid;
           grid-template-columns: 1fr 1fr 1fr;
           text-align: center;
