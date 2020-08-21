@@ -6,6 +6,13 @@
     <div class="client-list">
       <div class="client-item" v-for="(item, index) in clientList.length && clientList" :key="index">
         <div class="client-title">
+          <template v-if="item.status === 0">
+            <v-chip color="#2a765a" label text-color="white" small>
+              <v-icon left>mdi-label</v-icon>
+              未确认
+            </v-chip>
+          </template>
+
           <template v-if="item.status === 1">
             <v-chip color="#cfa26b" label text-color="white" small>
               <v-icon left>mdi-label</v-icon>
