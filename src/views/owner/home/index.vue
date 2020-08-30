@@ -2,7 +2,7 @@
   <div class="home">
     <div class="banner">
       <v-avatar size="90">
-        <img :src="avatar" alt="John" />
+        <img :src="avatar" />
       </v-avatar>
       <span class="title">{{ name }}</span>
       <div class="features">

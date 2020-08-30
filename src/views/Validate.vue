@@ -42,6 +42,7 @@
         message: '',
         color: '',
         snackbar: false,
+        code: null,
       };
     },
     methods: {
@@ -56,11 +57,6 @@
           };
           console.log('FORM DATA: ', formData);
 
-          // if (res && res.status === 200) {
-          //   this.$store.dispatch('userRegistered', res.data);
-          //   console.log(res.data.msg);
-          //   this.$router.replace('/owner');
-          // }
           try {
             const res = await submitForm(formData);
             console.log('RESPONSE: ', res);
@@ -73,6 +69,8 @@
             this.message = '验证成功';
             this.color = 'success';
             this.snackbar = true;
+
+            this.$store.dispatch('userRegistered', res.data);
             this.$router.replace('/owner');
           } catch (error) {
             console.log(error);
@@ -91,8 +89,7 @@
 
 <style lang="scss" scoped>
   .report {
-    overflow: scroll;
-    height: calc(100vh - 55px);
+    overflow: hidden;
     background-color: #ffffff;
 
     input {

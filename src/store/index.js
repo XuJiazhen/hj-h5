@@ -1,8 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import { getUserInfo, getAuthInfo } from '@/api/user.js';
-import { setToken } from '@/utils/auth.js';
+import { getUserInfo } from '@/api/user.js';
 
 Vue.use(Vuex);
 
@@ -15,7 +14,7 @@ export default new Vuex.Store({
     identity: 'owner',
   },
   mutations: {
-    SET_USERINFO: (state, data) => {
+    SET_USERINFO: (state, data, res) => {
       state.wechatInfo = data.wechat_info;
       state.realInfo = data.local_info;
       state.registered = data.is_registed;
@@ -34,7 +33,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         getUserInfo(code)
           .then((res) => {
-            console.log(res);
+            console.log('LOGININFO: ', res);
             if (res && res.status === 203) {
               window.location.assign(
                 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6adda564dfb9dd52&redirect_uri=https://nfhy.wechat.huijianfc.com&response_type=code&scope=snsapi_userinfo&#wechat_redirect',
