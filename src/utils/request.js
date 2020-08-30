@@ -1,5 +1,6 @@
 import axios from 'axios';
-// import store from '../store';
+import store from '../store';
+import { getToken } from './auth.js';
 
 const service = axios.create({
   baseURL: 'https://api.huijianfc.cn/hunan/wxweb/',
@@ -7,17 +8,18 @@ const service = axios.create({
   withCredentials: true,
 });
 
-// service.interceptors.request.use(
-//   (config) => {
-//     if (store.state.token) {
-//       config.headers['X-Admin-Token'] = getToken();
-//     }
+service.interceptors.request.use(
+  (config) => {
+    if (store.state.token && store.state.wechatInfo) {
+      config.headers['X-User-Token'] = getToken('UserToken');
+      config.headers['X-User-Id'] = store.state.wechatInfo.id;
+    }
 
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   },
-// );
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
 
 export default service;

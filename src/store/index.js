@@ -3,6 +3,8 @@ import Vuex from 'vuex';
 
 import { getUserInfo } from '@/api/user.js';
 
+import { setToken } from '@/utils/auth.js';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -12,19 +14,20 @@ export default new Vuex.Store({
     realInfo: null,
     registered: false,
     identity: 'owner',
+    token: '',
   },
   mutations: {
-    SET_USERINFO: (state, data, res) => {
+    SET_USERINFO: (state, data) => {
       state.wechatInfo = data.wechat_info;
       state.realInfo = data.local_info;
       state.registered = data.is_registed;
+      state.token = data.token;
       state.identity = data.user_type;
       state.refresh = false;
     },
     SET_REALINFO: (state, data) => {
-      state.wechatInfo = data.info.wechat_info;
       state.realInfo = data.info.local_info;
-      state.identity = data.info.identity;
+      state.identity = data.info.user_type;
       state.registered = data.info.is_registed;
     },
   },
@@ -43,6 +46,7 @@ export default new Vuex.Store({
               commit('SET_USERINFO', data);
               localStorage.setItem('WechatInfo', JSON.stringify(data.wechat_info));
               localStorage.setItem('RealInfo', JSON.stringify(data.local_info));
+              setToken(data.token);
               resolve(data);
             }
           })
@@ -53,7 +57,6 @@ export default new Vuex.Store({
     },
     userRegistered({ commit }, data) {
       if (data) {
-        localStorage.setItem('WechatInfo', JSON.stringify(data.info.wechat_info));
         localStorage.setItem('RealInfo', JSON.stringify(data.info.local_info));
         commit('SET_REALINFO', data);
         return true;
